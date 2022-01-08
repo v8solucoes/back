@@ -2,8 +2,8 @@ import * as functions from 'firebase-functions'
 import * as express from 'express'
 import * as cors from 'cors'
 
-import { deletar, editar, item, lista, nova, usuario } from './firebase'
-import { acao } from '../../interface/modulos/variaveis'
+import { deletar, editar, pegar, listar, novo, usuario } from './firebase'
+import { acao } from '../../interface/variaveis'
 
 var credenciais = express()
 
@@ -11,7 +11,7 @@ credenciais.use(cors());
 
 credenciais.get('/', async (req: any, res: any) => {
 
-  console.log(acao.itemNovo)
+  console.log(acao.novo)
   console.log(acao)
 
   res.status(200).send(`Sucesso`);
@@ -26,26 +26,17 @@ credenciais.post('/credenciais', async (req: any, res: any) => {
 
   switch (dadosCliente.acao) {
 
-    case 'usuario':
-      res.status(200).send(await usuario('usuario', dadosCliente.chave)); break;
+    case  acao.usuario : res.send(await usuario('usuario', dadosCliente.chave)); break;
 
-    case 'nova':
-      res.status(200).send(await nova(dadosCliente)); break;
+    case acao.novo  : res.send(await novo(dadosCliente)); break;
 
-    case 'editar':
-      res.status(200).send(await editar(dadosCliente)); break;
+    case acao.editar: res.send(await editar(dadosCliente)); break;
 
-    case 'update':
-      res.status(200).send(await editar(dadosCliente)); break;
+    case acao.pegar : res.send(await pegar(dadosCliente)); break;
 
-    case 'item':
-      res.status(200).send(await item(dadosCliente)); break;
+    case acao.listar: res.send(await listar(dadosCliente)); break;
 
-    case 'lista':
-      res.status(200).send(await lista(dadosCliente)); break;
-
-    case 'deletar':
-      res.status(200).send(await deletar(dadosCliente)); break;
+    case acao.deletar: res.send(await deletar(dadosCliente)); break;
 
     default:
       const erro = `Ação não encontrada: ${dadosCliente.acao}`

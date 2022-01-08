@@ -15,7 +15,7 @@ export async function TestarCredencial(req: any, res:any, next:any) {
     next();
   };
 
-export async function nova(cliente:any) {
+export async function novo(cliente:any) {
   
    const  rota = rotas(cliente.credenciais);
     return db.collection(rota).add(cliente.dados)
@@ -42,7 +42,7 @@ export async function nova(cliente:any) {
     })
 }
 
-export async function item(cliente:any) {
+export async function pegar(cliente:any) {
    const  rota = rotas(cliente.credenciais);
    console.log(rota);
     return documento(rota, cliente.credenciais.item)
@@ -58,7 +58,7 @@ export async function editar(cliente: any) {
     return update(rota, cliente.credenciais.item, cliente.dados)
 }
 
-export async function lista(cliente:any) {
+export async function listar(cliente:any) {
    const  rota = rotas(cliente.credenciais);
    console.log(rota);
     return colecao(rota)
