@@ -5,29 +5,55 @@ const db = admin.firestore();
 /* const fire = db.firestore; */
 /* const  lote = fire.batch(); */
 
-export function criarLote() {
-  const novoId = db.bundle().bundleId;
-  const data = admin.firestore.FieldValue.serverTimestamp();
-  const incrementa = admin.firestore.FieldValue.increment(1);
-  const novaLista = admin.firestore.FieldValue.arrayUnion("Olá");
+export async function  criarLote() {
 
-  db.collection("api")
+  /* Criar Log 
+
+  credenciais: {
+      tipo: 'adm',
+      idUsuario: 'ZEjRkWCDc1PkuIaFyaWnYqmJY4q1',
+      revendas: ['C0JrcUWVqTQR3sPt8Qqo'],
+      clientes: ['gfFyiX5IU4OaoXm4BDzX'],
+      usuarioNome: 'Emerson',
+      usuarioEmail: 'teste@v8sites.com.br',
+      idRevenda: 'C0JrcUWVqTQR3sPt8Qqo',
+      idCliente: 'gfFyiX5IU4OaoXm4BDzX',
+      chaveDados: 'revendaV8dados',
+      modulo: 'apresentador',
+      moduloUrl: 'apresentador',
+      nomeModulo: 'Apresentador',
+      acao: 'listar',
+      item: 'xxxxx',
+      moduloServico: true,
+      dataHora:
+    }
+  
+  */
+
+  console.log('Lote')
+
+  try {
+
+  const novoId = db.bundle().bundleId;
+  const dataHora = admin.firestore.FieldValue.serverTimestamp();
+  const incrementa = admin.firestore.FieldValue.increment(1);
+  const decrementa = admin.firestore.FieldValue.increment(-1);
+  const novaLista = admin.firestore.FieldValue.arrayUnion(novoId);
+console.log(novoId)
+   await db.collection("api")
     .doc("credenciais")
     .update({
-      novoId,
-      data,
+      dataHora,
       incrementa,
+      decrementa,
       novaLista,
     })
-  /*   .then((doc: any) => {
-      const resposta = {
-        existe: true,
-        error: null,
-        mensagem: "Update Sucesso",
-        data: doc,
-      };
-      return resposta;
-    }); */
+    console.log('Lote Processado')
+  } catch (error) {
+    console.log(error)
+  }
+
+  
 }
 
 interface Resposta {
@@ -182,6 +208,10 @@ export async function usuario(caminho: any, chave: any) {
     for (const key of Object.keys(usuario.modulo)) {
       usuario.modulo[key].modelo = modelo[key];
     }
+
+    console.log('ANALIZAR AQUI')
+    console.log(usuario.modulo.apresentador.modelo)
+    console.log('PARAR AQUI')
 
     const resposta = {
       existe: true,
