@@ -1,24 +1,41 @@
 import * as functions from 'firebase-functions'
 import * as express from 'express'
 import * as cors from 'cors'
+/* import * as pug from 'pug'; */
 
-import { deletar, editar, pegar, listar, novo, usuario } from './firebase'
+import { Request, Response } from 'express';
+import { criarLote, deletar, editar, pegar, listar, novo, usuario } from './servico-credenciais/firebase'
+import { criarApresentador } from './servico-apresentador/apresentador'
+
 import { acao } from '../../interface/variaveis'
 
 var credenciais = express()
 
 credenciais.use(cors());
+credenciais.set('view engine', 'pug')
+credenciais.set('views', './src/views')
 
-credenciais.get('/', async (req: any, res: any) => {
+credenciais.get('/', async (req: Request, res: Response) => {
 
-  console.log(acao.novo)
-  console.log(acao)
+  console.log('Iniciado Home Service')
+  criarLote()
 
-  res.status(200).send(`Sucesso`);
+  /* res.json({ message: 'hello world with Typescript' }) */
+  /* response.sendfile('index.html'); */
+
+  res.render('index', { title: 'Api', message: 'Home', data: criarApresentador('teste','testes')});
 
 })
 
-credenciais.post('/credenciais', async (req: any, res: any) => {
+credenciais.get('/apresentador', async (req: Request, res: Response) => {
+
+  console.log('Apresentador')
+
+  res.render('index', { title: 'Api', message: 'Apresentador'});
+
+})
+
+credenciais.post('/credenciais', async (req: Request, res: Response) => {
 
   const dadosCliente = req.body
   console.log(dadosCliente)
