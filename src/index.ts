@@ -1,71 +1,111 @@
-import * as functions from 'firebase-functions'
-import * as express from 'express'
-import * as cors from 'cors'
-/* import * as pug from 'pug'; */
+import * as functions from "firebase-functions";
+import * as express from "express";
+import * as cors from "cors";
 
-import { Request, Response } from 'express';
-import { criarLote, deletar, editar, pegar, listar, novo, usuario } from './servico-credenciais/firebase'
-import { criarApresentador } from './servico-apresentador/apresentador'
+import {
+  InterfaceConstrutor,
+  acao,
+  RequisicaoServidor,
+  deletar,
+  editar,
+  pegar,
+  listar,
+  novo,
+  usuario,
+  criarApresentador,
+/*   CriarDados */
+} from "./index-modulo";
 
-import { acao } from '../../interface/variaveis'
 
-var credenciais = express()
+/* var lote = new CriarLote(); */
+
+var credenciais = express();
 
 credenciais.use(cors());
-credenciais.set('view engine', 'pug')
-credenciais.set('views', './src/views')
+credenciais.set("view engine", "pug");
+credenciais.set("views", "./src/views");
 
-credenciais.get('/', async (req: Request, res: Response) => {
+credenciais.get("/", async (req: express.Request, res: express.Response) => {
+ 
+/*   lote.criar(); */
+  console.log("Iniciado Home Service");
 
-  console.log('Iniciado Home Service')
-  criarLote()
+/* criarLote() */
 
   /* res.json({ message: 'hello world with Typescript' }) */
   /* response.sendfile('index.html'); */
 
-  res.render('index', { title: 'Api', message: 'Home', data: criarApresentador('teste','testes')});
-
-})
-
-credenciais.get('/apresentador', async (req: Request, res: Response) => {
-
-  console.log('Apresentador')
-
-  res.render('index', { title: 'Api', message: 'Apresentador'});
-
-})
-
-credenciais.post('/credenciais', async (req: Request, res: Response) => {
-
-  const dadosCliente = req.body
-  console.log(dadosCliente)
-  console.log(acao)
-
-  switch (dadosCliente.acao) {
-
-    case  acao.usuario : res.send(await usuario('usuario', dadosCliente.chave)); break;
-
-    case acao.novo  : res.send(await novo(dadosCliente)); break;
-
-    case acao.editar: res.send(await editar(dadosCliente)); break;
-
-    case acao.pegar : res.send(await pegar(dadosCliente)); break;
-
-    case acao.listar: res.send(await listar(dadosCliente)); break;
-
-    case acao.deletar: res.send(await deletar(dadosCliente)); break;
-
-    default:
-      const erro = `Ação não encontrada: ${dadosCliente.acao}`
-      console.log(erro)
-      res.status(200).send(erro)
-      break;
-  };
-
-})
-
-credenciais.use(function (req, res, next) {
-  res.status(404).send('Desculpe Url não encontrada!');
+  res.render("index", {
+    title: "Api",
+    message: "Home",
+    data: criarApresentador("teste", "testes"),
+  });
 });
 
-exports.credenciais = functions.https.onRequest(credenciais)
+credenciais.get("/criar-dados", async (req: express.Request, res: express.Response) => {
+  console.log("Criar Dados");
+
+  var criarInterface = new InterfaceConstrutor();
+  
+  try {
+    
+    criarInterface
+    res.json(criarInterface.configuracao)
+/*     var criarModulo = new CriarDados();
+    const criar = await criarModulo.criar();
+    
+    res.json(criar); */
+
+  } catch (error) {
+    res
+      .status(500)
+      .render("index", {
+        title: "Criar Modulo Erro do Servidor",
+        message: error,
+      });
+  }
+});
+
+credenciais.post("/credenciais", async (req: express.Request, res: express.Response) => {
+  const requisicao: RequisicaoServidor = req.body;
+  console.log(requisicao.credenciais.acao);
+  /*   console.log(acao) */
+
+  switch (requisicao.credenciais.acao) {
+    case acao.usuario:
+      res.send(await usuario(requisicao));
+      break;
+
+    case acao.pegar:
+      res.send(await pegar(requisicao));
+      break;
+
+    case acao.novo:
+      res.send(await novo(requisicao));
+      break;
+
+    case acao.editar:
+      res.send(await editar(requisicao));
+      break;
+
+    case acao.listar:
+      res.send(await listar(requisicao));
+      break;
+
+    case acao.deletar:
+      res.send(await deletar(requisicao));
+      break;
+
+    default:
+      const erro = `Ação não encontrada: ${requisicao.credenciais.acao}`;
+      console.log(erro);
+      res.status(200).send(erro);
+      break;
+  }
+});
+
+credenciais.use(function (req, res, next) {
+  res.status(404).send("Desculpe Url não encontrada!");
+});
+
+exports.credenciais = functions.https.onRequest(credenciais);
