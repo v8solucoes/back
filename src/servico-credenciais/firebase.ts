@@ -3,7 +3,7 @@ import { RequisicaoServidor, RespostaServidor } from "./credencial-modulo";
 
 import * as admin from "firebase-admin";
 import { CredencialNova, CriarCredencial } from "./credencial-modulo";
-import { RelatorioAcao } from "../../../interface/credenciais";
+import { RelatorioAcao } from "../../../_interface/credenciais";
 
 admin.initializeApp();
 const db = admin.firestore();

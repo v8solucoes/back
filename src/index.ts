@@ -2,22 +2,8 @@ import * as functions from "firebase-functions";
 import * as express from "express";
 import * as cors from "cors";
 
-import {
-  InterfaceConstrutor,
-  acao,
-  RequisicaoServidor,
-  deletar,
-  editar,
-  pegar,
-  listar,
-  novo,
-  usuario,
-  criarApresentador,
-/*   CriarDados */
-} from "./index-modulo";
-
-
-/* var lote = new CriarLote(); */
+import { ModeloRequisicao } from "./index-modulo";
+import { Requisicao } from "../../construtor/src/construtor/requisicao/requisicao.interface";
 
 var credenciais = express();
 
@@ -26,83 +12,66 @@ credenciais.set("view engine", "pug");
 credenciais.set("views", "./src/views");
 
 credenciais.get("/", async (req: express.Request, res: express.Response) => {
- 
-/*   lote.criar(); */
-  console.log("Iniciado Home Service");
 
-/* criarLote() */
+  console.log("Iniciado Home Service");
 
   /* res.json({ message: 'hello world with Typescript' }) */
   /* response.sendfile('index.html'); */
 
   res.render("index", {
     title: "Api",
-    message: "Home",
-    data: criarApresentador("teste", "testes"),
+    message: "Home"
   });
 });
 
-credenciais.get("/criar-dados", async (req: express.Request, res: express.Response) => {
-  console.log("Criar Dados");
+credenciais.get("/criar-dados",
 
-  var criarInterface = new InterfaceConstrutor();
-  
-  try {
-    
-    criarInterface
-    res.json(criarInterface.configuracao)
-/*     var criarModulo = new CriarDados();
-    const criar = await criarModulo.criar();
-    
-    res.json(criar); */
+  async (req: express.Request, res: express.Response) => {
+ 
+  /*   const requisicao: Requisicao = {
+      credencial: dados_Dados.usuarioAdm.credencial,
+      dados: dados_Dados
+    } */
 
-  } catch (error) {
-    res
-      .status(500)
-      .render("index", {
-        title: "Criar Modulo Erro do Servidor",
+    
+
+    try {
+   /*    const resposta = await new ModeloRequisicao().crud(requisicao)
+      res.json(resposta); */
+/*       req.headers.host */
+
+      res.json({
+        'origem':` ${req.headers.host}`,
+      });
+   
+    } catch (error) {
+      res.status(500).render("index", {
+        title: "Erro do Servidor",
         message: error,
       });
+    }
   }
-});
+);
 
-credenciais.post("/credenciais", async (req: express.Request, res: express.Response) => {
-  const requisicao: RequisicaoServidor = req.body;
-  console.log(requisicao.credenciais.acao);
-  /*   console.log(acao) */
+credenciais.post(
+  "/credenciais",
+  async (req: express.Request, res: express.Response) => {
+   
+    /* const requisicao: Requisicao = req.body; */
+    const requisicao: Requisicao = req.body
 
-  switch (requisicao.credenciais.acao) {
-    case acao.usuario:
-      res.send(await usuario(requisicao));
-      break;
-
-    case acao.pegar:
-      res.send(await pegar(requisicao));
-      break;
-
-    case acao.novo:
-      res.send(await novo(requisicao));
-      break;
-
-    case acao.editar:
-      res.send(await editar(requisicao));
-      break;
-
-    case acao.listar:
-      res.send(await listar(requisicao));
-      break;
-
-    case acao.deletar:
-      res.send(await deletar(requisicao));
-      break;
-
-    default:
-      const erro = `Ação não encontrada: ${requisicao.credenciais.acao}`;
-      console.log(erro);
-      res.status(200).send(erro);
-      break;
+    try {
+      const resposta = await new ModeloRequisicao().crud(requisicao)
+      res.json(resposta);
+   
+    } catch (error) {
+      res.status(500).render("index", {
+        title: "Erro do Servidor",
+        message: error,
+      });
+    }
   }
-});
+);
 
 credenciais.use(function (req, res, next) {
   res.status(404).send("Desculpe Url não encontrada!");

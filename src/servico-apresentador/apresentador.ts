@@ -1,5 +1,5 @@
 
-export async function criarApresentador(caminho:any, chave:any) {
+export function criarApresentador(caminho:any, chave:any) {
 
   // Buscar no Banco de Dados lista.
 

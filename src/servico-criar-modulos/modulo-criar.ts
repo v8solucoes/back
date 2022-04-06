@@ -3,7 +3,7 @@ import {
   CriarCredencial,
 } from "./modulo-modulo";
 
-import { UsuarioAdm_Modulo_Dados} from "../../../interface/NOVA-INTERFACE/modulo-import"
+import { UsuarioAdm_Modulo_Dados} from "../../../_interface/NOVA-INTERFACE/modulo-import"
 export class CriarDados {
 
   constructor() { }

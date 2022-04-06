@@ -1,4 +1,4 @@
-import { AcaoNomes } from "../../../interface/interfaces-imports";
+import { AcaoNomes } from "../../../_interface/interfaces-imports";
 import {
   CredencialUsuario,
   CredencialModulo,

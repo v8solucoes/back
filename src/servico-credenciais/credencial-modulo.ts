@@ -11,7 +11,7 @@ export {
     CredencialNova,
     Rota,
     TipoRota
-  } from '../../../interface/interfaces-imports'
+  } from '../../../_interface/interfaces-imports'
 
   export { CriarCredencial } from './credencial-criar'
   export { CredencialPronta } from './credencial-pronta'
@@ -21,4 +21,4 @@ export {
     credencialModuloModeloAdm,
     acao,
     design
-} from '../../../interface/variaveis-imports'
+} from '../../../_interface/variaveis-imports'

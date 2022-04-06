@@ -9,8 +9,8 @@ export {
     MenuDados,
     ModeloUsuario,
     UsuarioDataBase
-  } from "../../../interface/interfaces-imports";
-  export { CriarModuloCredencial, CriarModuloDados, CriarModuloModelo  } from "../../../interface/modulos/modulos";
+  } from "../../../_interface/interfaces-imports";
+  export { CriarModuloCredencial, CriarModuloDados, CriarModuloModelo  } from "../../../_interface/modulos/modulos";
 
   export { Debugar, debugar } from "../../../funcoes/funcoes-import";
 
@@ -18,7 +18,7 @@ export {
 
   export { DataBase } from "../servico-credenciais/firebase";
 
-  export { credenciaisDados, design } from "../../../interface/variaveis-imports";
+  export { credenciaisDados, design } from "../../../_interface/variaveis-imports";
 
 export  { moduloUsuarioAdm } from "./modulo-nomes"
 export  { menu } from "./modulo-menu"

@@ -1,4 +1,4 @@
-import { ModuloIdUrl } from "../../../interface/interfaces-imports";
+import { ModuloIdUrl } from "../../../_interface/interfaces-imports";
 
 export const moduloUsuarioAdm: ModuloIdUrl = {
     nome: 'Usuarios',
