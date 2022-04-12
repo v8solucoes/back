@@ -3,9 +3,11 @@ import * as express from "express";
 import * as cors from "cors";
 import { deletar, editar, pegar, listar, novo, usuario } from './servico-credenciais/firebase'
 import { ModeloRequisicao } from "./index-modulo";
-import { Requisicao } from "../../construtor/src/construtor/requisicao/requisicao.interface";
 import { Request, Response } from 'express';
 import { acao } from './servico-credenciais/variaveis'
+import {Requisicao, Resposta } from '../../appFront/src/app/inteface'
+import { Funcoes } from '../../construtor/src/funcoes/back/funcoes'
+
 var credenciais = express();
 
 credenciais.use(cors());
@@ -25,6 +27,50 @@ credenciais.get("/", async (req: express.Request, res: express.Response) => {
   });
 });
 
+credenciais.get("/criar-modelo",
+
+  async (req: express.Request, res: express.Response) => {
+
+ /*    const requisicao: Requisicao = {
+    'credencial': credencial,
+    'dados' : modelo_Dados
+    } */
+
+    try {
+   /*    const resposta = await new ModeloRequisicao().crud(requisicao) */
+  
+      res.json('resposta');
+      
+    } catch (error) {
+      res.status(500).render("index", {
+        title: "Erro do Servidor",
+        message: error,
+      });
+    }
+  }
+);
+credenciais.post("/funcao",
+
+  async (req: express.Request, res: express.Response) => {
+    
+    const requisicao = req.body as Requisicao
+    const nomeFuncao = requisicao.credencial.requisicao.funcao
+    const funcoes = new Funcoes(requisicao)
+    
+    try {
+     
+      const resposta = await funcoes[nomeFuncao]
+  
+      res.json(resposta as Resposta);
+      
+    } catch (error) {
+      res.status(500).render("index", {
+        title: "Erro do Servidor",
+        message: error,
+      });
+    }
+  }
+);
 credenciais.post("/cadastrar",
 
   async (req: express.Request, res: express.Response) => {
@@ -34,7 +80,7 @@ credenciais.post("/cadastrar",
     try {
       const resposta = await new ModeloRequisicao().crud(requisicao)
   
-      res.json(resposta);
+      res.json(resposta as Resposta);
       
     } catch (error) {
       res.status(500).render("index", {
