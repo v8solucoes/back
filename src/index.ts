@@ -5,8 +5,8 @@ import { deletar, editar, pegar, listar, novo, usuario } from './servico-credenc
 import { ModeloRequisicao } from "./index-modulo";
 import { Request, Response } from 'express';
 import { acao } from './servico-credenciais/variaveis'
-import {Requisicao, Resposta } from '../../appFront/src/app/inteface'
 import { Funcoes } from '../../construtor/src/funcoes/back/funcoes'
+import { Requisicao, Resposta } from "../../construtor/src/construtor/interface/interface";
 
 var credenciais = express();
 
