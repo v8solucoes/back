@@ -1,0 +1,6 @@
+{
+    "watch": ["src/", "../construtor/src/"],
+    "ext": ".ts",
+    "ignore": ["lib/"],
+    "exec": "npm run serve"
+  }
