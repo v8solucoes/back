@@ -1,2 +1,2 @@
-export { ModeloRequisicao } from '../../construtor/src/construtor/requisicao/requesicao.modelo'
-export { dados_Dados } from '../../construtor/src/construtor/dist/dadosApp/dadosApp.dados'
+/* export { ModeloRequisicao } from '../../construtor/src/construtor/crud/crud.modelo'
+ */export { dados_Dados } from '../../construtor/src/construtor/04-dist/dadosApp/dadosApp.dados'

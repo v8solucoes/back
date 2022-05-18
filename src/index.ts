@@ -2,11 +2,11 @@ import * as functions from "firebase-functions";
 import * as express from "express";
 import * as cors from "cors";
 import { deletar, editar, pegar, listar, novo, usuario } from './servico-credenciais/firebase'
-import { ModeloRequisicao } from "./index-modulo";
+/* import { ModeloRequisicao } from "./index-modulo"; */
 import { Request, Response } from 'express';
 import { acao } from './servico-credenciais/variaveis'
-import { Funcoes } from '../../construtor/src/funcoes/back/funcoes'
-import { Requisicao, Resposta } from "../../construtor/src/construtor/interface/interface";
+/* import { Funcoes } from '../../construtor/src/funcoes/back/funcoes' */
+/* import { Requisicao, Resposta } from "../../construtor/src/construtor/interface/interface"; */
 
 var credenciais = express();
 
@@ -27,69 +27,71 @@ credenciais.get("/", async (req: express.Request, res: express.Response) => {
   });
 });
 
-credenciais.get("/criar-modelo",
+// credenciais.get("/criar-modelo",
 
-  async (req: express.Request, res: express.Response) => {
+//   async (req: express.Request, res: express.Response) => {
 
- /*    const requisicao: Requisicao = {
-    'credencial': credencial,
-    'dados' : modelo_Dados
-    } */
+//  /*    const requisicao: Requisicao = {
+//     'credencial': credencial,
+//     'dados' : modelo_Dados
+//     } */
 
-    try {
-   /*    const resposta = await new ModeloRequisicao().crud(requisicao) */
+//     try {
+//    /*    const resposta = await new ModeloRequisicao().crud(requisicao) */
   
-      res.json('resposta');
+//       res.json('resposta');
       
-    } catch (error) {
-      res.status(500).render("index", {
-        title: "Erro do Servidor",
-        message: error,
-      });
-    }
-  }
-);
-credenciais.post("/funcao",
+//     } catch (error) {
+//       res.status(500).render("index", {
+//         title: "Erro do Servidor",
+//         message: error,
+//       });
+//     }
+//   }
+// );
+// credenciais.post("/funcao",
 
-  async (req: express.Request, res: express.Response) => {
+//   async (req: express.Request, res: express.Response) => {
     
-    const requisicao = req.body as Requisicao
-    const nomeFuncao = requisicao.credencial.requisicao.funcao
-    const funcoes = new Funcoes(requisicao)
+// /*     const requisicao = req.body as Requisicao */
+// /*     const nomeFuncao = requisicao.credencial.requisicao.funcao
+//     const funcoes = new Funcoes(requisicao) */
     
-    try {
+//     try {
      
-      const resposta = await funcoes[nomeFuncao]
+//      /*  const resposta = await funcoes[nomeFuncao]
   
-      res.json(resposta as Resposta);
-      
-    } catch (error) {
-      res.status(500).render("index", {
-        title: "Erro do Servidor",
-        message: error,
-      });
-    }
-  }
-);
-credenciais.post("/cadastrar",
+//       res.json(resposta as Resposta);
+//        */
+//       res.json('resposta');
+//     } catch (error) {
+//       res.status(500).render("index", {
+//         title: "Erro do Servidor",
+//         message: error,
+//       });
+//     }
+//   }
+// );
+// credenciais.post("/cadastrar",
 
-  async (req: express.Request, res: express.Response) => {
+//   async (req: express.Request, res: express.Response) => {
  
-    const requisicao = req.body as Requisicao
+// /*     const requisicao = req.body as Requisicao */
 
-    try {
-      const resposta = await new ModeloRequisicao().crud(requisicao)
+//     try {
+//    /*    const resposta = await new ModeloRequisicao().crud(requisicao)
   
-      res.json(resposta as Resposta);
+//       res.json(resposta as Resposta); */
+//       res.json('resposta');
       
-    } catch (error) {
-      res.status(500).render("index", {
-        title: "Erro do Servidor",
-        message: error,
-      });
-    }
-  }
-);
+//     } catch (error) {
+//       res.status(500).render("index", {
+//         title: "Erro do Servidor",
+//         message: error,
+//       });
+//     }
+//   }
+// );
 
 credenciais.post('/credenciais', async (req: Request, res: Response) => {
 
