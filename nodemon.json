@@ -1,5 +1,5 @@
 {
-    "watch": ["src/", "../construtor/src/"],
+    "watch": ["src/", "../library-shared/src/"],
     "ext": ".ts",
     "ignore": ["lib/"],
     "exec": "npm run serve"

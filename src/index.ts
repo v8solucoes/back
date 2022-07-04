@@ -1,8 +1,9 @@
 import * as functions from "firebase-functions";
 import * as express from "express";
 import * as cors from "cors";
-import { Funcao_Modelo } from '../src/imports'
-import { RequisicaoDados } from "../../construtor/src/construtor/11-credencial/credencial.interface";
+import { ValidateComposeAsync } from '../../library-shared/src/domain/validators/validate-compose-async'
+import { Irequest, IValidatorRequest } from "@shared-library/interface";
+
 
 var credenciais = express();
 
@@ -29,17 +30,41 @@ credenciais.post("/api",
 
     console.log(req.body)
     
-    const requisicao = req.body as RequisicaoDados
-    const funcao = requisicao.credencial.requisicao.funcao
+    /* const requisicao = req.body  */
+   /*  const funcao = requisicao.credencial.requisicao.funcao */
     
     try {
      
-      const funcoes = await new Funcao_Modelo(requisicao)[funcao]
-      res.json(funcoes);
+/*       const funcoes =` await new Funcaos_Modelo(requisicao)[funcao]` */
+      res.json({sucess:'Sucessofff'});
 
     } catch (error) {
       res.status(500).render("index", {
         title: "Erro do Servidor",
+        message: error,
+      });
+    }
+  }
+);
+credenciais.post("/validator",
+
+  async (req: express.Request, res: express.Response) => {
+
+    const request: Irequest = req.body as Irequest
+    const validator = req.body.validator as IValidatorRequest
+
+    console.log('Validator')
+    console.log(request)
+    
+    try {
+     
+      const response = await new ValidateComposeAsync(validator)['emailUserExist'].validate
+      console.log(response)
+      res.json(response);
+
+    } catch (error) {
+      res.status(500).render("index", {
+        title: "Erro do Servidor / Validator",
         message: error,
       });
     }
