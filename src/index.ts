@@ -1,7 +1,7 @@
 import * as functions from "firebase-functions";
 import * as express from "express";
 import * as cors from "cors";
-import { ValidateComposeAsync } from '../../library-shared/src/domain/validators/validate-compose-async'
+import { ValidatorsBack } from "../../library-shared/src/shared/validator-back";
 import { Irequest, IValidatorRequest } from "@shared-library/interface";
 
 
@@ -24,9 +24,14 @@ credenciais.get("/", async (req: express.Request, res: express.Response) => {
   });
 });
 
-credenciais.post("/api",
+credenciais.post("/CRUD",
 
   async (req: express.Request, res: express.Response) => {
+
+    const request: Irequest = req.body as Irequest
+
+    console.log('Crud')
+    console.log(request)
 
     console.log(req.body)
     
@@ -36,18 +41,17 @@ credenciais.post("/api",
     try {
      
 /*       const funcoes =` await new Funcaos_Modelo(requisicao)[funcao]` */
-      res.json({sucess:'Sucessofff'});
+      res.json(null);
 
     } catch (error) {
       res.status(500).render("index", {
-        title: "Erro do Servidor",
+        title: "Erro do Servidor / CRUD",
         message: error,
       });
     }
   }
 );
 credenciais.post("/validator",
-
   async (req: express.Request, res: express.Response) => {
 
     const request: Irequest = req.body as Irequest
@@ -55,10 +59,10 @@ credenciais.post("/validator",
 
     console.log('Validator')
     console.log(request)
-    
+
     try {
      
-      const response = await new ValidateComposeAsync(validator)['emailUserExist'].validate
+      const response = await new ValidatorsBack(validator)[validator.nameValidator].validateAsync
       console.log(response)
       res.json(response);
 
