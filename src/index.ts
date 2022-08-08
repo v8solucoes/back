@@ -32,10 +32,7 @@ credenciais.post("/CRUD",
 
     console.log('Crud')
     console.log(request)
-
-    console.log(req.body)
     
-    /* const requisicao = req.body  */
    /*  const funcao = requisicao.credencial.requisicao.funcao */
     
     try {
