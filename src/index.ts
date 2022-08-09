@@ -1,12 +1,19 @@
 import * as functions from "firebase-functions";
 import * as express from "express";
 import * as cors from "cors";
+<<<<<<< HEAD
 import { deletar, editar, pegar, listar, novo, usuario } from './servico-credenciais/firebase'
 import { ModeloRequisicao } from "./index-modulo";
 import { Request, Response } from 'express';
 import { acao } from './servico-credenciais/variaveis'
 import { Funcoes } from '../../construtor/src/funcoes/back/funcoes'
 import { Requisicao, Resposta } from "../../construtor/src/construtor/interface/interface";
+=======
+import { ValidatorsBack } from "../../library-shared/src/shared/validator-back";
+import { FunctionsBack } from "../../library-shared/src/shared/functions-back";
+import { Irequest, IValidatorRequest } from "@shared-library/interface";
+
+>>>>>>> 4e243a23b8ddfd0e9639b13bd5f48bf98cd00d5b
 
 var credenciais = express();
 
@@ -27,7 +34,11 @@ credenciais.get("/", async (req: express.Request, res: express.Response) => {
   });
 });
 
+<<<<<<< HEAD
 credenciais.get("/criar-modelo",
+=======
+credenciais.post("/CRUD",
+>>>>>>> 4e243a23b8ddfd0e9639b13bd5f48bf98cd00d5b
 
 //   async (req: express.Request, res: express.Response) => {
 
@@ -51,6 +62,7 @@ credenciais.get("/criar-modelo",
 );
 credenciais.post("/funcao",
 
+<<<<<<< HEAD
   async (req: express.Request, res: express.Response) => {
     
     const requisicao = req.body as Requisicao
@@ -63,25 +75,59 @@ credenciais.post("/funcao",
   
       res.json(resposta as Resposta);
       
+=======
+    const request: Irequest = req.body as Irequest
+
+    console.log('REQUEST =============================')
+    console.log(request)
+        
+    try {
+
+      const response = await new FunctionsBack(request).accountAdm.create
+      console.log('RESPONSE ============================')
+      console.log(response)
+      res.json(response);
+
+
+>>>>>>> 4e243a23b8ddfd0e9639b13bd5f48bf98cd00d5b
     } catch (error) {
       res.status(500).render("index", {
-        title: "Erro do Servidor",
+        title: "Erro do Servidor / CRUD",
         message: error,
       });
     }
   }
 );
+<<<<<<< HEAD
 credenciais.post("/cadastrar",
 
+=======
+credenciais.post("/validator",
+>>>>>>> 4e243a23b8ddfd0e9639b13bd5f48bf98cd00d5b
   async (req: express.Request, res: express.Response) => {
  
     const requisicao = req.body as Requisicao
 
+<<<<<<< HEAD
     try {
       const resposta = await new ModeloRequisicao().crud(requisicao)
   
       res.json(resposta as Resposta);
       
+=======
+    const request: Irequest = req.body as Irequest
+    const validator = req.body.validator as IValidatorRequest
+
+    console.log('Validator')
+    console.log(request)
+
+    try {
+     
+      const response = await new ValidatorsBack(validator)[validator.nameValidator].validateAsync
+      console.log(response)
+      res.json(response);
+
+>>>>>>> 4e243a23b8ddfd0e9639b13bd5f48bf98cd00d5b
     } catch (error) {
       res.status(500).render("index", {
         title: "Erro do Servidor",
