@@ -1,12 +1,16 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
     "noImplicitReturns": true,
     "noUnusedLocals": true,
-    "outDir": "lib",
     "sourceMap": true,
     "strict": true,
+    "outDir": "lib",
     "target": "es2017", 
+    "module": "commonjs",
+    "paths":{
+      "@shared-library/*":["./../library-shared/src/shared/*"],
+      "@shared-angular/*":["./src/app/shared/*"],
+    },
   },
   "compileOnSave": true,
   "include": [
