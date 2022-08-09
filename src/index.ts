@@ -2,6 +2,7 @@ import * as functions from "firebase-functions";
 import * as express from "express";
 import * as cors from "cors";
 import { ValidatorsBack } from "../../library-shared/src/shared/validator-back";
+import { FunctionsBack } from "../../library-shared/src/shared/functions-back";
 import { Irequest, IValidatorRequest } from "@shared-library/interface";
 
 
@@ -30,15 +31,16 @@ credenciais.post("/CRUD",
 
     const request: Irequest = req.body as Irequest
 
-    console.log('Crud')
+    console.log('REQUEST =============================')
     console.log(request)
-    
-   /*  const funcao = requisicao.credencial.requisicao.funcao */
-    
+        
     try {
-     
-/*       const funcoes =` await new Funcaos_Modelo(requisicao)[funcao]` */
-      res.json(null);
+
+      const response = await new FunctionsBack(request).accountAdm.create
+      console.log('RESPONSE ============================')
+      console.log(response)
+      res.json(response);
+
 
     } catch (error) {
       res.status(500).render("index", {
