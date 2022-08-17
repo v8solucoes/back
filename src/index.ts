@@ -1,9 +1,9 @@
 import * as functions from "firebase-functions";
 import * as express from "express";
 import * as cors from "cors";
-import { ValidatorsBack } from "../../library-shared/src/shared/validator-back";
-import { FunctionsBack } from "../../library-shared/src/shared/functions-back";
-import { Irequest, IValidatorRequest } from "@shared-library/interface";
+import { ValidatorsRemote } from "../../library-shared/src/shared/validator-remote";
+import { Module } from "../../library-shared/src/shared/modules";
+import { Irequest } from "@shared-library/interface";
 
 
 var credenciais = express();
@@ -36,7 +36,7 @@ credenciais.post("/CRUD",
         
     try {
 
-      const response = await new FunctionsBack(request).accountAdm.create
+      const response = await new Module(request).accountAdm.create()
       console.log('RESPONSE ============================')
       console.log(response)
       res.json(response);
@@ -54,14 +54,14 @@ credenciais.post("/validator",
   async (req: express.Request, res: express.Response) => {
 
     const request: Irequest = req.body as Irequest
-    const validator = req.body.validator as IValidatorRequest
 
-    console.log('Validator')
+    console.log('REQUEST: Validator ================')
     console.log(request)
 
     try {
      
-      const response = await new ValidatorsBack(validator)[validator.nameValidator].validateAsync
+      const response = await new ValidatorsRemote(request)[request.validator!.name].validateAsync
+      console.log('RESPONSE: Validator ================')  
       console.log(response)
       res.json(response);
 
