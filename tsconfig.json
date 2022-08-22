@@ -8,7 +8,7 @@
     "target": "es2017", 
     "module": "commonjs",
     "paths":{
-      "@shared-library/*":["./../library-shared/src/shared/*"],
+      "@domain/*":["./../domain/src/shared/*"],
       "@shared-angular/*":["./src/app/shared/*"],
     },
   },

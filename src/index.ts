@@ -1,9 +1,9 @@
 import * as functions from "firebase-functions";
 import * as express from "express";
 import * as cors from "cors";
-import { ValidatorsRemote } from "../../library-shared/src/shared/validator-remote";
-import { Module } from "../../library-shared/src/shared/modules";
-import { Irequest } from "@shared-library/interface";
+import { ValidatorsRemote } from "../../domain/src/shared/validator-remote";
+import { Module } from "../../domain/src/shared/modules";
+import { Irequest } from "@domain/interface";
 
 var credenciais = express();
 
