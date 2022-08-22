@@ -9,9 +9,9 @@ import { acao } from './servico-credenciais/variaveis'
 import { Funcoes } from '../../construtor/src/funcoes/back/funcoes'
 import { Requisicao, Resposta } from "../../construtor/src/construtor/interface/interface";
 =======
-import { ValidatorsBack } from "../../library-shared/src/shared/validator-back";
-import { FunctionsBack } from "../../library-shared/src/shared/functions-back";
-import { Irequest, IValidatorRequest } from "@shared-library/interface";
+import { ValidatorsBack } from "../../domain/src/shared/validator-back";
+import { FunctionsBack } from "../../domain/src/shared/functions-back";
+import { Irequest, IValidatorRequest } from "@domain/interface";
 
 >>>>>>> 4e243a23b8ddfd0e9639b13bd5f48bf98cd00d5b
 
