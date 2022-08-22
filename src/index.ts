@@ -5,7 +5,6 @@ import { ValidatorsRemote } from "../../library-shared/src/shared/validator-remo
 import { Module } from "../../library-shared/src/shared/modules";
 import { Irequest } from "@shared-library/interface";
 
-
 var credenciais = express();
 
 credenciais.use(cors());
@@ -25,10 +24,11 @@ credenciais.get("/", async (req: express.Request, res: express.Response) => {
   });
 });
 
+
 credenciais.post("/CRUD",
 
   async (req: express.Request, res: express.Response) => {
-
+      
     const request: Irequest = req.body as Irequest
 
     console.log('REQUEST =============================')
@@ -41,7 +41,6 @@ credenciais.post("/CRUD",
       console.log(response)
       res.json(response);
 
-
     } catch (error) {
       res.status(500).render("index", {
         title: "Erro do Servidor / CRUD",
@@ -50,8 +49,10 @@ credenciais.post("/CRUD",
     }
   }
 );
+
 credenciais.post("/validator",
-  async (req: express.Request, res: express.Response) => {
+
+  async (req: express.Request, res: express.Response) => {     
 
     const request: Irequest = req.body as Irequest
     console.clear()
@@ -64,15 +65,15 @@ credenciais.post("/validator",
       console.log('RESPONSE: Validator ================')  
       console.log(response)
       res.json(response);
-
     } catch (error) {
       res.status(500).render("index", {
-        title: "Erro do Servidor / Validator",
+        title: "Erro do Servidor Validator",
         message: error,
       });
     }
   }
 );
+
 
 credenciais.use(function (req, res, next) {
   res.status(404).send("Desculpe Url não encontrada!");
