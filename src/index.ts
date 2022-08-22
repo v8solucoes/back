@@ -54,7 +54,7 @@ credenciais.post("/validator",
   async (req: express.Request, res: express.Response) => {
 
     const request: Irequest = req.body as Irequest
-
+    console.clear()
     console.log('REQUEST: Validator ================')
     console.log(request)
 
