@@ -2,6 +2,7 @@ import * as functions from "firebase-functions";
 import * as express from "express";
 import * as cors from "cors";
 import { ValidatorsRemote } from "../../domain/src/shared/validator-remote";
+import { TestCompose } from "../../domain/src/shared/validator-local";
 import { Module } from "../../domain/src/shared/modules";
 import { Irequest } from "@domain/interface";
 
@@ -10,6 +11,24 @@ var credenciais = express();
 credenciais.use(cors());
 credenciais.set("view engine", "pug");
 credenciais.set("views", "./src/views");
+
+var testRequest = (req: express.Request, res: express.Response, next: express.NextFunction)=> {
+  const request: Irequest = req.body as Irequest
+  const test = new TestCompose(request).testRequest
+  console.clear
+  if (test == null) {
+    console.log('REQUEST Aprovated');
+    next();
+   
+  } else {
+    console.log('REQUEST Reprovated');
+    /* next(); */
+    res.json(test);
+ }
+  
+};
+
+credenciais.use(testRequest);
 
 credenciais.get("/", async (req: express.Request, res: express.Response) => {
 
@@ -24,14 +43,14 @@ credenciais.get("/", async (req: express.Request, res: express.Response) => {
   });
 });
 
-
 credenciais.post("/CRUD",
 
   async (req: express.Request, res: express.Response) => {
+    console.clear
       
     const request: Irequest = req.body as Irequest
 
-    console.log('REQUEST =============================')
+    console.group('REQUEST =============================')
     console.log(request)
         
     try {
@@ -39,6 +58,7 @@ credenciais.post("/CRUD",
       const response = await new Module(request).accountAdm.create()
       console.log('RESPONSE ============================')
       console.log(response)
+      console.groupEnd()
       res.json(response);
 
     } catch (error) {
