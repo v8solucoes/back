@@ -50,15 +50,15 @@ credenciais.post("/CRUD",
       
     const request: Irequest = req.body as Irequest
 
-    console.group('REQUEST =============================')
+    console.log('REQUEST CRUD =============================')
     console.log(request)
         
     try {
 
       const response = await new Module(request).accountAdm.create()
-      console.log('RESPONSE ============================')
+      console.log('RESPONSE CRUD ============================')
       console.log(response)
-      console.groupEnd()
+  
       res.json(response);
 
     } catch (error) {
