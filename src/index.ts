@@ -3,7 +3,7 @@ import * as express from "express";
 import * as cors from "cors";
 import { ValidatorsRemote } from "../../domain/src/shared/validator-remote";
 import { TestCompose } from "../../domain/src/shared/validator-local";
-import { Module } from "../../domain/src/shared/modules";
+import { Documents } from "../../domain/src/shared/modules";
 import { Irequest } from "@domain/interface";
 
 var credenciais = express();
@@ -55,7 +55,7 @@ credenciais.post("/CRUD",
         
     try {
 
-      const response = await new Module(request).accountAdm.create()
+      const response = await new Documents(request).account_adm.create()
       console.log('RESPONSE CRUD ============================')
       console.log(response)
   
