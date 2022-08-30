@@ -15,7 +15,7 @@ credenciais.set("views", "./src/views");
 var testRequest = (req: express.Request, res: express.Response, next: express.NextFunction)=> {
   const request: Irequest = req.body as Irequest
   const test = new TestCompose(request).testRequest
-  console.clear
+  console.clear()
   if (test == null) {
     console.log('REQUEST Aprovated');
     next();
@@ -50,7 +50,9 @@ credenciais.post("/CRUD",
       
     const request: Irequest = req.body as Irequest
 
+
     console.log('REQUEST CRUD =============================')
+    console.log(req.baseUrl)
     console.log(request)
         
     try {
