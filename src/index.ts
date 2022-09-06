@@ -5,6 +5,7 @@ import { ValidatorsRemote } from "../../domain/src/shared/validator-remote";
 import { TestCompose } from "../../domain/src/shared/validator-local";
 import { Documents } from "../../domain/src/shared/modules";
 import { Irequest } from "@domain/interface";
+import { TestDocument } from "../../domain/src/shared/validator-remote";
 
 var credenciais = express();
 
@@ -17,18 +18,39 @@ var testRequest = (req: express.Request, res: express.Response, next: express.Ne
   const test = new TestCompose(request).testRequest
   console.clear()
   if (test == null) {
-    console.log('REQUEST Aprovated');
+    console.log('TEST REQUEST Aprovated');
     next();
 
   } else {
-    console.log('REQUEST Reprovated');
+    console.log('TEST REQUEST Reprovated');
     /* next(); */
-    res.json(test);
+    res.json(JSON.stringify(test));
+  }
+
+};
+var testDocument = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
+
+  const request: Irequest = req.body as Irequest
+
+  console.log('REQUEST environment');
+  console.log(request.environment);
+  const test = await new TestDocument(request).permisionDomain()
+  
+  console.clear()
+  if (test == null) {
+    console.log('TEST DOCUMENT Aprovated');
+    next();
+
+  } else {
+    console.log('TEST DOCUMENT Reprovated');
+  /*   console.log(test) */
+
+    res.json(JSON.stringify(test));
   }
 
 };
 
-credenciais.use(testRequest);
+/* credenciais.use(testRequest); */
 
 credenciais.get("/", async (req: express.Request, res: express.Response) => {
 
@@ -43,7 +65,7 @@ credenciais.get("/", async (req: express.Request, res: express.Response) => {
   });
 });
 
-credenciais.post("/CRUD",
+credenciais.post("/CRUD",testRequest,testDocument,
 
   async (req: express.Request, res: express.Response) => {
 
@@ -52,8 +74,8 @@ credenciais.post("/CRUD",
     const request: Irequest = req.body as Irequest
 
     console.log('REQUEST CRUD =============================')
-    console.log(req.baseUrl)
-    console.log(request)
+   /*  console.log(req.baseUrl)
+    console.log(request) */
 
     try {
 
@@ -63,13 +85,13 @@ credenciais.post("/CRUD",
           console.log('RESPONSE CRUD ============================')
           console.log(response)
 
-          res.json(response);
+          res.json(JSON.stringify(response));
 
         }
       )
 
     } catch (error) {
-      res.json(error);
+      res.json(JSON.stringify(error));
     }
   }
 );
@@ -102,14 +124,14 @@ credenciais.post("/CRUD",
   }
 ); */
 
-credenciais.post("/validator",
+credenciais.post("/validator",testRequest,
 
   async (req: express.Request, res: express.Response) => {
 
     const request: Irequest = req.body as Irequest
     console.clear()
     console.log('REQUEST: Validator ================')
-    console.log(request)
+   /*  console.log(request) */
 
     try {
 
