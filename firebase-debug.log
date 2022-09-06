@@ -1,0 +1,31 @@
+[debug] [2022-08-31T20:53:52.745Z] ----------------------------------------------------------------------
+[debug] [2022-08-31T20:53:52.747Z] Command:       /home/v8/.nvm/versions/node/v16.17.0/bin/node /home/v8/.nvm/versions/node/v16.17.0/bin/firebase emulators:start --only functions
+[debug] [2022-08-31T20:53:52.747Z] CLI Version:   11.8.0
+[debug] [2022-08-31T20:53:52.747Z] Platform:      linux
+[debug] [2022-08-31T20:53:52.747Z] Node Version:  v16.17.0
+[debug] [2022-08-31T20:53:52.748Z] Time:          Wed Aug 31 2022 17:53:52 GMT-0300 (Brasilia Standard Time)
+[debug] [2022-08-31T20:53:52.748Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2022-08-31T20:53:52.808Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2022-08-31T20:53:52.808Z] > authorizing via signed-in user (solucoesv8@gmail.com)
+[info] i  emulators: Starting emulators: functions {"metadata":{"emulator":{"name":"hub"},"message":"Starting emulators: functions"}}
+[info] i  emulators: Shutting down emulators. {"metadata":{"emulator":{"name":"hub"},"message":"Shutting down emulators."}}
+[debug] [2022-08-31T20:53:52.991Z] Error: EIO: i/o error, write
+    at writeSync (node:fs:924:3)
+    at SyncWriteStream._write (node:internal/fs/sync_write_stream:26:3)
+    at writeOrBuffer (node:internal/streams/writable:391:12)
+    at _write (node:internal/streams/writable:332:10)
+    at SyncWriteStream.Writable.write (node:internal/streams/writable:336:10)
+    at Console.log (/home/v8/.nvm/versions/node/v16.17.0/lib/node_modules/firebase-tools/node_modules/winston/lib/winston/transports/console.js:79:23)
+    at Console._write (/home/v8/.nvm/versions/node/v16.17.0/lib/node_modules/firebase-tools/node_modules/winston-transport/index.js:103:17)
+    at doWrite (/home/v8/.nvm/versions/node/v16.17.0/lib/node_modules/firebase-tools/node_modules/winston-transport/node_modules/readable-stream/lib/_stream_writable.js:428:64)
+    at writeOrBuffer (/home/v8/.nvm/versions/node/v16.17.0/lib/node_modules/firebase-tools/node_modules/winston-transport/node_modules/readable-stream/lib/_stream_writable.js:417:5)
+    at Console.Writable.write (/home/v8/.nvm/versions/node/v16.17.0/lib/node_modules/firebase-tools/node_modules/winston-transport/node_modules/readable-stream/lib/_stream_writable.js:334:11)
+    at DerivedLogger.ondata (/home/v8/.nvm/versions/node/v16.17.0/lib/node_modules/firebase-tools/node_modules/readable-stream/lib/_stream_readable.js:681:20)
+    at DerivedLogger.emit (node:events:525:35)
+    at DerivedLogger.emit (node:domain:489:12)
+    at addChunk (/home/v8/.nvm/versions/node/v16.17.0/lib/node_modules/firebase-tools/node_modules/readable-stream/lib/_stream_readable.js:298:12)
+    at readableAddChunk (/home/v8/.nvm/versions/node/v16.17.0/lib/node_modules/firebase-tools/node_modules/readable-stream/lib/_stream_readable.js:280:11)
+    at DerivedLogger.Readable.push (/home/v8/.nvm/versions/node/v16.17.0/lib/node_modules/firebase-tools/node_modules/readable-stream/lib/_stream_readable.js:241:10)
+[error] 
+[error] Error: An unexpected error has occurred.

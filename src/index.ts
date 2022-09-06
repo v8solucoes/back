@@ -12,20 +12,20 @@ credenciais.use(cors());
 credenciais.set("view engine", "pug");
 credenciais.set("views", "./src/views");
 
-var testRequest = (req: express.Request, res: express.Response, next: express.NextFunction)=> {
+var testRequest = (req: express.Request, res: express.Response, next: express.NextFunction) => {
   const request: Irequest = req.body as Irequest
   const test = new TestCompose(request).testRequest
   console.clear()
   if (test == null) {
     console.log('REQUEST Aprovated');
     next();
-   
+
   } else {
     console.log('REQUEST Reprovated');
     /* next(); */
     res.json(test);
- }
-  
+  }
+
 };
 
 credenciais.use(testRequest);
@@ -46,10 +46,40 @@ credenciais.get("/", async (req: express.Request, res: express.Response) => {
 credenciais.post("/CRUD",
 
   async (req: express.Request, res: express.Response) => {
-    console.clear
-      
+
+    console.clear()
+
     const request: Irequest = req.body as Irequest
 
+    console.log('REQUEST CRUD =============================')
+    console.log(req.baseUrl)
+    console.log(request)
+
+    try {
+
+      return await new Documents(request).account_adm.create().then(
+        response => {
+
+          console.log('RESPONSE CRUD ============================')
+          console.log(response)
+
+          res.json(response);
+
+        }
+      )
+
+    } catch (error) {
+      res.json(error);
+    }
+  }
+);
+/* credenciais.post("/CRUD",
+
+  async (req: express.Request, res: express.Response) => {
+   
+    console.clear()
+      
+    const request: Irequest = req.body as Irequest
 
     console.log('REQUEST CRUD =============================')
     console.log(req.baseUrl)
@@ -70,11 +100,11 @@ credenciais.post("/CRUD",
       });
     }
   }
-);
+); */
 
 credenciais.post("/validator",
 
-  async (req: express.Request, res: express.Response) => {     
+  async (req: express.Request, res: express.Response) => {
 
     const request: Irequest = req.body as Irequest
     console.clear()
@@ -82,9 +112,9 @@ credenciais.post("/validator",
     console.log(request)
 
     try {
-     
+
       const response = await new ValidatorsRemote(request)[request.validator!.name].validateAsync
-      console.log('RESPONSE: Validator ================')  
+      console.log('RESPONSE: Validator ================')
       console.log(response)
       res.json(response);
     } catch (error) {
