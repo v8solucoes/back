@@ -1,54 +1,15 @@
 import * as functions from "firebase-functions";
 import * as express from "express";
 import * as cors from "cors";
-import { ValidatorsRemote } from "../../domain/src/shared/validator-remote";
-import { TestCompose } from "../../domain/src/shared/validator-local";
+import { ValidatorsLogin, ValidatorsRemote } from "../../domain/src/shared/validator-remote";
 import { Documents } from "../../domain/src/shared/modules";
 import { Irequest } from "@domain/interface";
-import { TestDocument } from "../../domain/src/shared/validator-remote";
+import { testRequestPost, testDocument, testRequestGet } from "./test/test";
 
 var credenciais = express();
 
 credenciais.use(cors({ 'origin': '*' }));
-
-var testRequest = (req: express.Request, res: express.Response, next: express.NextFunction) => {
-  const request: Irequest = req.body as Irequest
-  const test = new TestCompose(request).testRequest
-  console.clear()
-  if (test == null) {
-    console.log('TEST REQUEST Aprovated');
-    next();
-
-  } else {
-    console.log('TEST REQUEST Reprovated');
-    /* next(); */
-    res.json(test);
-  }
-
-};
-var testDocument = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
-
-  const request: Irequest = req.body as Irequest
-
-  try {
-
-    const test = await new TestDocument(request).permisionDomain()
-
-    console.clear()
-    if (test == null) {
-      console.log('TEST DOCUMENT Aprovated');
-      next();
-
-    }
-
-  } catch (error) {
-    console.log('TEST DOCUMENT Reprovated');
-    res.json(error);
-  }
-
-};
-
-/* credenciais.use(testRequest); */
+/* credenciais.use(cors({ 'origin': ['http://localhost:4200',] })); */
 
 credenciais.get("/", async (req: express.Request, res: express.Response) => {
 
@@ -63,7 +24,7 @@ credenciais.get("/", async (req: express.Request, res: express.Response) => {
   });
 });
 
-credenciais.post("/CRUD", testRequest, testDocument,
+credenciais.post("/CRUD", cors(), testRequestPost, testDocument,
 
   async (req: express.Request, res: express.Response) => {
 
@@ -93,36 +54,36 @@ credenciais.post("/CRUD", testRequest, testDocument,
     }
   }
 );
-/* credenciais.post("/CRUD",
+
+credenciais.get("/login/:token/", cors(), testRequestGet,
 
   async (req: express.Request, res: express.Response) => {
-   
-    console.clear()
-      
-    const request: Irequest = req.body as Irequest
 
-    console.log('REQUEST CRUD =============================')
-    console.log(req.baseUrl)
-    console.log(request)
-        
+   /*  console.log('REQ')
+    console.log(req.headers) */
+    const token = req.params['token'] as string
+    const request = JSON.parse(req.headers['request'] as any)
+    
+    console.clear()
+
+    console.log('REQUEST: Login ================')
+
     try {
 
-      const response = await new Documents(request).account_adm.create()
-      console.log('RESPONSE CRUD ============================')
+      const response = await new ValidatorsLogin(token,request)['loginGetModel']
+      console.log('RESPONSE: Login ================')
       console.log(response)
-  
       res.json(response);
-
     } catch (error) {
       res.status(500).render("index", {
-        title: "Erro do Servidor / CRUD",
+        title: "Erro do Servidor Login",
         message: error,
       });
     }
   }
-); */
+);
 
-credenciais.post("/validator", cors(), testRequest,
+credenciais.post("/validator", cors(), testRequestPost,
 
   async (req: express.Request, res: express.Response) => {
 
