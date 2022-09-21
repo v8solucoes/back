@@ -19,11 +19,13 @@ export const testRequestPost = (req: express.Request, res: express.Response, nex
 
 };
 export const testRequestGet = (req: express.Request, res: express.Response, next: express.NextFunction) => {
-  const request = JSON.parse(req.headers['request'] as any)
-  const test = new TestCompose(request).testRequestLogin
+  console.log('TEST Get REQUEST');
+/*   console.log(req.params); */
+  const request = req.params['request'] as any
+  const test = new TestCompose(JSON.parse(request)).testRequest
   console.clear()
   if (test == null) {
-    console.log('TEST Get REQUEST Aprovated');
+    console.log('Aprovated');
     next();
 
   } else {

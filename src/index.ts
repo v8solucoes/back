@@ -55,14 +55,14 @@ credenciais.post("/CRUD", cors(), testRequestPost, testDocument,
   }
 );
 
-credenciais.get("/login/:token/", cors(), testRequestGet,
+credenciais.get("/login/:token/:request", cors(), testRequestGet,
 
   async (req: express.Request, res: express.Response) => {
 
-   /*  console.log('REQ')
-    console.log(req.headers) */
+    console.log('REQ')
+    console.log(req)
     const token = req.params['token'] as string
-    const request = JSON.parse(req.headers['request'] as any)
+    const request = req.params['request'] as any
     
     console.clear()
 
@@ -70,7 +70,7 @@ credenciais.get("/login/:token/", cors(), testRequestGet,
 
     try {
 
-      const response = await new ValidatorsLogin(token,request)['loginGetModel']
+      const response = await new ValidatorsLogin(token,JSON.parse(request))['loginGetModel']
       console.log('RESPONSE: Login ================')
       console.log(response)
       res.json(response);
