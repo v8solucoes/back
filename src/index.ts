@@ -1,15 +1,41 @@
 import * as functions from "firebase-functions";
 import * as express from "express";
 import * as cors from "cors";
-import { ValidatorsLogin, ValidatorsRemote } from "../../domain/src/shared/validator-remote";
+import { ValidatorsRemote } from "../../domain/src/shared/validator-remote";
 import { Documents } from "../../domain/src/shared/modules";
 import { Irequest } from "@domain/interface";
 import { testRequestPost, testDocument, testRequestGet } from "./test/test";
+import { Firebase } from "../../domain/src/domain/api/firebase";
 
 var credenciais = express();
 
 credenciais.use(cors({ 'origin': '*' }));
 /* credenciais.use(cors({ 'origin': ['http://localhost:4200',] })); */
+credenciais.get("/colection/:token/:request", cors(), testRequestGet,
+
+  async (req: express.Request, res: express.Response) => {
+
+    const token = req.params['token'] as string
+    const request = req.params['request'] as any
+    
+    console.clear()
+
+    console.log('REQUEST: Colection ================')
+
+    try {
+
+      const response = await Firebase.colection(token,JSON.parse(request))
+      console.log('RESPONSE: Colection ================')
+      console.log(response)
+      res.json(response);
+    } catch (error) {
+      res.status(500).render("index", {
+        title: "Erro do Servidor Login",
+        message: error,
+      });
+    }
+  }
+);
 
 credenciais.get("/", async (req: express.Request, res: express.Response) => {
 
@@ -55,7 +81,7 @@ credenciais.post("/CRUD", cors(), testRequestPost, testDocument,
   }
 );
 
-credenciais.get("/login/:token/:request", cors(), testRequestGet,
+credenciais.get("/user/:token/:request", cors(), testRequestGet,
 
   async (req: express.Request, res: express.Response) => {
 
@@ -70,7 +96,7 @@ credenciais.get("/login/:token/:request", cors(), testRequestGet,
 
     try {
 
-      const response = await new ValidatorsLogin(token,JSON.parse(request))['loginGetModel']
+      const response = await Firebase.userPermissionAndModelAsync(token,JSON.parse(request))
       console.log('RESPONSE: Login ================')
       console.log(response)
       res.json(response);
