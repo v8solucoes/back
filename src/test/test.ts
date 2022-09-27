@@ -1,5 +1,6 @@
 import { Irequest } from "@domain/interface";
 import * as express from "express";
+import { Firebase } from "../../../domain/src/domain/api/firebase";
 import { TestCompose } from "../../../domain/src/shared/validator-local";
 import { TestDocument } from "../../../domain/src/shared/validator-remote";
 
@@ -57,3 +58,28 @@ export const testDocument = async (req: express.Request, res: express.Response, 
   }
 
 };
+
+export const securityColection = async (req: express.Request, res: express.Response, next: express.NextFunction)=> {
+
+  const token = req.params['token'] as string
+  const request = JSON.parse(req.params['request']) as Irequest
+
+  try {
+
+    const user = await Firebase.userPermissionAndModelAsync(token, request)
+
+    const test = Firebase.securityColectionAndDocumentAcessIsValid(user.permission, request)
+
+    if (test == true) {
+      console.log('Security Aprovated');
+     const colection = await Firebase.colection(request)
+      res.json(colection)
+    }
+
+  } catch (error) {
+    console.log('Security Reprovated');
+    console.log(error);
+    res.json({error: `security-reprovated: ${error}`});
+  }
+
+}
