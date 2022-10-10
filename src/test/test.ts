@@ -30,7 +30,24 @@ export const testRequestGet = (req: express.Request, res: express.Response, next
     next();
 
   } else {
-    console.log('TEST Get REQUEST Reprovated');
+    console.log('Reprovated');
+    /* next(); */
+    res.json(test);
+  }
+
+};
+export const testRequestGetDocument = (req: express.Request, res: express.Response, next: express.NextFunction) => {
+  console.log('TEST Get Document');
+/*   console.log(req.params); */
+  const request = req.params['request'] as any
+  const test = new TestCompose(JSON.parse(request)).testRequestDocument
+  console.clear()
+  if (test == null) {
+    console.log('Aprovated');
+    next();
+
+  } else {
+    console.log('Reprovated');
     /* next(); */
     res.json(test);
   }
@@ -59,6 +76,30 @@ export const testDocument = async (req: express.Request, res: express.Response, 
 
 };
 
+export const securityDocument = async (req: express.Request, res: express.Response, next: express.NextFunction)=> {
+
+  const token = req.params['token'] as string
+  const request = JSON.parse(req.params['request']) as Irequest
+
+  try {
+
+    const user = await Firebase.userPermissionAndModelAsync(token, request)
+
+    const test = Firebase.securityColectionAndDocumentAcessIsValid(user.permission, request)
+
+    if (test == true) {
+      console.log('Security Aprovated');
+     const colection = await Firebase.colection(request)
+      res.json(colection)
+    }
+
+  } catch (error) {
+    console.log('Security Reprovated');
+    console.log(error);
+    res.json({error: `security-reprovated: ${error}`});
+  }
+
+}
 export const securityColection = async (req: express.Request, res: express.Response, next: express.NextFunction)=> {
 
   const token = req.params['token'] as string

@@ -4,7 +4,7 @@ import * as cors from "cors";
 import { ValidatorsRemote } from "../../domain/src/shared/validator-remote";
 import { Documents } from "../../domain/src/shared/modules";
 import { Irequest } from "@domain/interface";
-import { testRequestPost, testDocument, testRequestGet, securityColection } from "./test/test";
+import { testRequestPost, testDocument, testRequestGet, securityColection, testRequestGetDocument, securityDocument } from "./test/test";
 import { Firebase } from "../../domain/src/domain/api/firebase";
 
 var credenciais = express();
@@ -13,6 +13,10 @@ credenciais.use(cors({ 'origin': '*' }));
 /* credenciais.use(cors({ 'origin': ['http://localhost:4200',] })); */
 credenciais.get("/colection/:token/:request",
   cors(), testRequestGet, securityColection
+);
+
+credenciais.get("/document/:token/:request",
+  cors(), testRequestGetDocument, securityDocument
 );
 
 credenciais.get("/", async (req: express.Request, res: express.Response) => {
