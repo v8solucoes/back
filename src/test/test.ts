@@ -88,9 +88,9 @@ export const securityDocument = async (req: express.Request, res: express.Respon
     const test = Firebase.securityColectionAndDocumentAcessIsValid(user.permission, request)
 
     if (test == true) {
-      console.log('Security Aprovated');
-     const colection = await Firebase.colection(request)
-      res.json(colection)
+      console.log('Security Document Aprovated');
+     const document = await Firebase.document(request)
+      res.json(document)
     }
 
   } catch (error) {
