@@ -1636,3 +1636,4 @@ INFO: Detected non-HTTP/2 connection.
 Sep 29, 2022 11:33:08 PM com.google.cloud.datastore.emulator.firestore.websocket.WebSocketChannelHandler channelClosed
 INFO: Websocket client disconnected
 *** shutting down gRPC server since JVM is shutting down
+*** server shut down
