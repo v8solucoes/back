@@ -4,19 +4,20 @@ import * as cors from "cors";
 import { ValidatorsRemote } from "../../domain/src/shared/validator-remote";
 import { Documents } from "../../domain/src/shared/modules";
 import { Irequest } from "@domain/interface";
-import { testRequestPost, testDocument, testRequestGet, securityColection, testRequestGetDocument, securityDocument } from "./test/test";
+import { testRequestPost, testPostDocument, testRequestGet, securityGetColection, testRequestGetDocument, securityGetDocument } from "./test/test";
 import { Firebase } from "../../domain/src/domain/api/firebase";
 
 var credenciais = express();
 
 credenciais.use(cors({ 'origin': '*' }));
 /* credenciais.use(cors({ 'origin': ['http://localhost:4200',] })); */
+
 credenciais.get("/colection/:token/:request",
-  cors(), testRequestGet, securityColection
+  cors(), testRequestGet, securityGetColection
 );
 
 credenciais.get("/document/:token/:request",
-  cors(), testRequestGetDocument, securityDocument
+  cors(), testRequestGetDocument, securityGetDocument
 );
 
 credenciais.get("/", async (req: express.Request, res: express.Response) => {
@@ -31,8 +32,33 @@ credenciais.get("/", async (req: express.Request, res: express.Response) => {
     message: "Home"
   });
 });
+credenciais.post("/crudGeneric", cors(), testRequestPost, testPostDocument,
 
-credenciais.post("/CRUD", cors(), testRequestPost, testDocument,
+  async (req: express.Request, res: express.Response) => {
+
+    console.clear()
+    console.log('CrudGeneric =============================')
+    const request: Irequest = req.body as Irequest
+
+    try {
+
+      return await new Documents(request).account_adm.create().then(
+        response => {
+
+          console.log('RESPONSE CRUD ============================')
+          console.log(JSON.stringify(response))
+
+          res.json({response});
+
+        }
+      )
+
+    } catch (error) {
+      res.json(error);
+    }
+  }
+);
+credenciais.post("/CRUD", cors(), testRequestPost, testPostDocument,
 
   async (req: express.Request, res: express.Response) => {
 
@@ -113,7 +139,6 @@ credenciais.post("/validator", cors(), testRequestPost,
     }
   }
 );
-
 
 credenciais.use(function (req, res, next) {
   res.status(404).send("Desculpe Url não encontrada!");
