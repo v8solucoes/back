@@ -2,7 +2,7 @@ import * as functions from "firebase-functions";
 import * as express from "express";
 import * as cors from "cors";
 import { ValidatorsRemote } from "../../domain/src/shared/validator-remote";
-import { Documents } from "../../domain/src/shared/modules";
+import { Controllers } from './../../domain/src/domain/controllers/controllers';
 import { Irequest } from "@domain/interface";
 import { testRequestPost, testPostDocument, testRequestGet, securityGetColection, testRequestGetDocument, securityGetDocument } from "./test/test";
 import { Firebase } from "../../domain/src/domain/api/firebase";
@@ -42,7 +42,7 @@ credenciais.post("/crudGeneric", cors(), testRequestPost, testPostDocument,
 
     try {
 
-      return await new Documents(request).account_adm.create().then(
+      return await new Controllers(request).account_adm.create().then(
         response => {
 
           console.log('RESPONSE CRUD ============================')
@@ -72,7 +72,7 @@ credenciais.post("/CRUD", cors(), testRequestPost, testPostDocument,
 
     try {
 
-      return await new Documents(request).account_adm.create().then(
+      return await new Controllers(request).account_adm.create().then(
         response => {
 
           console.log('RESPONSE CRUD ============================')
