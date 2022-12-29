@@ -64,19 +64,6 @@ export const testPostDocument = async (req: express.Request, res: express.Respon
 
   const request: Irequest = req.body as Irequest
 
- /*  try {
-    if (test == null) {
-      
-      return  next();
-    } else {
-      throw new Error(`${JSON.stringify(test)}`);
-    }
-  } catch (error) {
-          console.log('error')
-          console.log(error)
-    return res.json(error);
-  } */
-
   try {
 
     const test = await new TestDocument(request).permisionDomain()
@@ -128,6 +115,32 @@ export const securityGetColection = async (req: express.Request, res: express.Re
   console.log('TEST Security Get COLECTION');
   const token = req.params['token'] as string
   const request = JSON.parse(req.params['request']) as Irequest
+
+  try {
+
+    const user = await Firebase.userPermissionAndModelAsync(token, request)
+
+    const test = Firebase.securityColectionAndDocumentAcessIsValid(user.permission, request)
+
+    if (test == true) {
+      console.log('Aprovated');
+     const colection = await Firebase.colection(request)
+      res.json(colection)
+    }
+
+  } catch (error) {
+    console.log('Reprovated');
+    console.log(error);
+    res.json({error: `security-reprovated: ${error}`});
+  }
+
+}
+export const securityCrudPermission = async (req: express.Request, res: express.Response, next: express.NextFunction)=> {
+  console.clear()
+  console.log('Security Crud Permission');
+
+  const request: Irequest = req.body as Irequest
+  const token:string = ''
 
   try {
 
