@@ -20,7 +20,7 @@ credenciais.get("/document/:token/:request",
   cors(), testRequestGetDocument, securityGetDocument
 );
 
-credenciais.get("/", async (req: express.Request, res: express.Response) => {
+credenciais.get("/", cors(), async (req: express.Request, res: express.Response) => {
 
   console.log("Iniciado Home Service");
 
@@ -36,13 +36,13 @@ credenciais.post("/crudGeneric", cors(), testRequestPost, testPostDocument,
 
   async (req: express.Request, res: express.Response) => {
 
-    console.clear()
+   /*  console.clear() */
     console.log('CrudGeneric =============================')
     const request: Irequest = req.body as Irequest
 
     try {
 
-      return await new Controllers(request).account_adm.create().then(
+      return await new Controllers(request)[request.document][request.action]().then(
         response => {
 
           console.log('RESPONSE CRUD ============================')
@@ -58,7 +58,7 @@ credenciais.post("/crudGeneric", cors(), testRequestPost, testPostDocument,
     }
   }
 );
-credenciais.post("/CRUD", cors(), testRequestPost, testPostDocument,
+/* credenciais.post("/CRUD", cors(), testRequestPost, testPostDocument,
 
   async (req: express.Request, res: express.Response) => {
 
@@ -67,12 +67,10 @@ credenciais.post("/CRUD", cors(), testRequestPost, testPostDocument,
     const request: Irequest = req.body as Irequest
 
     console.log('REQUEST CRUD =============================')
-    /*  console.log(req.baseUrl)
-     console.log(request) */
 
     try {
 
-      return await new Controllers(request).account_adm.create().then(
+      return await new Controllers(request)[request.document][request.action]().then(
         response => {
 
           console.log('RESPONSE CRUD ============================')
@@ -87,7 +85,7 @@ credenciais.post("/CRUD", cors(), testRequestPost, testPostDocument,
       res.json(error);
     }
   }
-);
+); */
 
 credenciais.get("/user/:token/:request", cors(), testRequestGet,
 
