@@ -39,9 +39,10 @@ credenciais.post("/crudGeneric", cors(), testRequestPost, testPostDocument,
    /*  console.clear() */
     console.log('CrudGeneric =============================')
     const request: Irequest = req.body as Irequest
-
+    
     try {
-
+      
+    /*   console.log('TRY  =============================') */
       return await new Controllers(request)[request.document][request.action]().then(
         response => {
 
@@ -54,7 +55,8 @@ credenciais.post("/crudGeneric", cors(), testRequestPost, testPostDocument,
       )
 
     } catch (error) {
-      res.json(error);
+      console.log('RESPONSE CRUD ERROR ============================')
+      res.json({error});
     }
   }
 );
