@@ -1,4 +1,5 @@
-import * as functions from "firebase-functions";
+/* import * as functions from "firebase-functions"; */
+const {onRequest} = require("firebase-functions/v2/https");
 import * as express from "express";
 import * as cors from "cors";
 import { ValidatorsRemote } from "../../domain/src/shared/validator-remote";
@@ -12,27 +13,25 @@ var credenciais = express();
 credenciais.use(cors({ 'origin': '*' }));
 /* credenciais.use(cors({ 'origin': ['http://localhost:4200',] })); */
 
-credenciais.get("/colection/:token/:request",
-  cors(), testRequestGet, securityGetColection
+credenciais.get("/colection/:token/:request", testRequestGet, securityGetColection
 );
 
-credenciais.get("/document/:token/:request",
-  cors(), testRequestGetDocument, securityGetDocument
+credenciais.get("/document/:token/:request", testRequestGetDocument, securityGetDocument
 );
 
-credenciais.get("/", cors(), async (req: express.Request, res: express.Response) => {
+credenciais.get("/", async (req: express.Request, res: express.Response) => {
 
   console.log("Iniciado Home Service");
 
-  /* res.json({ message: 'hello world with Typescript' }) */
+  res.json({ message: 'hello world with Typescript' })
   /* response.sendfile('index.html'); */
 
-  res.render("index", {
+/*   res.render("index", {
     title: "Api",
     message: "Home"
-  });
+  }); */
 });
-credenciais.post("/crudGeneric", cors(), testRequestPost, testPostDocument,
+credenciais.post("/crudGeneric", testRequestPost, testPostDocument,
 
   async (req: express.Request, res: express.Response) => {
 
@@ -89,7 +88,7 @@ credenciais.post("/crudGeneric", cors(), testRequestPost, testPostDocument,
   }
 ); */
 
-credenciais.get("/user/:token/:request", cors(), testRequestGet,
+credenciais.get("/user/:token/:request", testRequestGet,
 
   async (req: express.Request, res: express.Response) => {
 
@@ -116,7 +115,7 @@ credenciais.get("/user/:token/:request", cors(), testRequestGet,
   }
 );
 
-credenciais.post("/validator", cors(), testRequestPost,
+credenciais.post("/validator", testRequestPost,
 
   async (req: express.Request, res: express.Response) => {
 
@@ -144,4 +143,4 @@ credenciais.use(function (req, res, next) {
   res.status(404).send("Desculpe Url não encontrada!");
 });
 
-exports.credenciais = functions.https.onRequest(credenciais);
+exports.credenciais = onRequest(credenciais);
