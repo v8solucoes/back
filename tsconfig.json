@@ -5,7 +5,7 @@
     "sourceMap": true,
     "strict": true,
     "outDir": "lib",
-    "target": "es2017", 
+    "target": "ES2022", 
     "module": "commonjs",
     "paths":{
       "@domain/*":["./../domain/src/shared/*"],
