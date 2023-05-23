@@ -8,18 +8,18 @@ import { Irequest } from "@domain/interface";
 import { testRequestPost, testPostDocument, testRequestGet, securityGetColection, testRequestGetDocument, securityGetDocument } from "./test/test";
 import { Firebase } from "../../domain/src/domain/api/firebase";
 
-var credenciais = express();
+var credenciaisSecondGen = express();
 
-credenciais.use(cors({ 'origin': '*' }));
+credenciaisSecondGen.use(cors({ 'origin': '*' }));
 /* credenciais.use(cors({ 'origin': ['http://localhost:4200',] })); */
 
-credenciais.get("/colection/:token/:request", testRequestGet, securityGetColection
+credenciaisSecondGen.get("/colection/:token/:request", testRequestGet, securityGetColection
 );
 
-credenciais.get("/document/:token/:request", testRequestGetDocument, securityGetDocument
+credenciaisSecondGen.get("/document/:token/:request", testRequestGetDocument, securityGetDocument
 );
 
-credenciais.get("/", async (req: express.Request, res: express.Response) => {
+credenciaisSecondGen.get("/", async (req: express.Request, res: express.Response) => {
 
   console.log("Iniciado Home Service");
 
@@ -31,7 +31,7 @@ credenciais.get("/", async (req: express.Request, res: express.Response) => {
     message: "Home"
   }); */
 });
-credenciais.post("/crudGeneric", testRequestPost, testPostDocument,
+credenciaisSecondGen.post("/crudGeneric", testRequestPost, testPostDocument,
 
   async (req: express.Request, res: express.Response) => {
 
@@ -88,7 +88,7 @@ credenciais.post("/crudGeneric", testRequestPost, testPostDocument,
   }
 ); */
 
-credenciais.get("/user/:token/:request", testRequestGet,
+credenciaisSecondGen.get("/user/:token/:request", testRequestGet,
 
   async (req: express.Request, res: express.Response) => {
 
@@ -115,7 +115,7 @@ credenciais.get("/user/:token/:request", testRequestGet,
   }
 );
 
-credenciais.post("/validator", testRequestPost,
+credenciaisSecondGen.post("/validator", testRequestPost,
 
   async (req: express.Request, res: express.Response) => {
 
@@ -139,8 +139,8 @@ credenciais.post("/validator", testRequestPost,
   }
 );
 
-credenciais.use(function (req, res, next) {
+credenciaisSecondGen.use(function (req, res, next) {
   res.status(404).send("Desculpe Url não encontrada!");
 });
 
-exports.credenciais = onRequest(credenciais);
+exports.credenciaisSecondGen = onRequest(credenciaisSecondGen);
