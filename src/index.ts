@@ -7,6 +7,7 @@ import { Controllers } from './../../domain/src/domain/controllers/controllers';
 import { Irequest } from "@domain/interface";
 import { testRequestPost, testPostDocument, testRequestGet, securityGetColection, testRequestGetDocument, securityGetDocument } from "./test/test";
 import { Firebase } from "../../domain/src/domain/api/firebase";
+import { _debugBack } from "../../domain/src/domain/repository/debug";
 
 var credenciaisSecondGen = express();
 
@@ -92,19 +93,24 @@ credenciaisSecondGen.get("/user/:token/:request", testRequestGet,
 
   async (req: express.Request, res: express.Response) => {
 
-/*     console.log('REQ')
-    console.log(req) */
     const token = req.params['token'] as string
     const request = req.params['request'] as any
+
+    if(_debugBack.login) {
+      console.log('REQUEST: Login ===================================================')
+      console.log(request)
+    }
     
     console.clear()
 
     try {
-
-      console.log('REQUEST: Login ================')
       const response = await Firebase.userPermissionAndModelAsync(token,JSON.parse(request))
-      console.log('Response: Login ================')
+
+      if(_debugBack.login) {
+      console.log('RESPONSE: Login ====================================================')
       console.log(response)
+      }
+
       res.json(response);
     } catch (error) {
       res.status(500).render("index", {
