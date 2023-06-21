@@ -3,6 +3,7 @@ import * as express from "express";
 import { Firebase } from "../../../domain/src/domain/api/firebase";
 import { TestCompose } from "../../../domain/src/shared/validator-local";
 import { TestDocument } from "../../../domain/src/shared/validator-remote";
+import { _debug, _debugBack } from "../../../domain/src/domain/repository/debug";
 
 export const testRequestPost = (req: express.Request, res: express.Response, next: express.NextFunction) => {
   console.clear()
@@ -21,13 +22,21 @@ export const testRequestPost = (req: express.Request, res: express.Response, nex
 
 };
 export const testRequestGet = (req: express.Request, res: express.Response, next: express.NextFunction) => {
-  console.clear()
-  console.log('TEST Get REQUEST');
+
+  if(_debugBack.testRequestGet){
+    console.clear()
+    console.log('TEST Get REQUEST Start');
+  }
+
   const request = req.params['request'] as any
   const test = new TestCompose(JSON.parse(request)).testRequest
  
   if (test == null) {
-    console.log('Aprovated');
+
+    if(_debugBack.testRequestGet){
+      console.clear()
+      console.log('APROVATED TEST Get REQUEST Start');
+    }
     next();
 
   } else {
@@ -111,8 +120,12 @@ export const securityGetDocument = async (req: express.Request, res: express.Res
 
 }
 export const securityGetColection = async (req: express.Request, res: express.Response, next: express.NextFunction)=> {
-  console.clear()
-  console.log('TEST Security Get COLECTION');
+ 
+  if(_debugBack.securityGetColection){
+    console.clear()
+    console.log('TEST Security Get COLECTION');
+  }
+
   const token = req.params['token'] as string
   const request = JSON.parse(req.params['request']) as Irequest
 
@@ -123,8 +136,16 @@ export const securityGetColection = async (req: express.Request, res: express.Re
     const test = Firebase.securityColectionAndDocumentAcessIsValid(user.permission, request)
 
     if (test == true) {
-      console.log('Aprovated');
-     const colection = await Firebase.colection(request)
+      
+      const colection = await Firebase.colection(request)
+
+      if(_debugBack.securityGetColection){
+        console.clear()
+        console.log('APROVATED > TEST Security Get COLECTION');
+        console.log(colection)
+      }
+
+
       res.json(colection)
     }
 

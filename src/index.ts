@@ -60,34 +60,6 @@ credenciaisSecondGen.post("/crudGeneric", testRequestPost, testPostDocument,
     }
   }
 );
-/* credenciais.post("/CRUD", cors(), testRequestPost, testPostDocument,
-
-  async (req: express.Request, res: express.Response) => {
-
-    console.clear()
-
-    const request: Irequest = req.body as Irequest
-
-    console.log('REQUEST CRUD =============================')
-
-    try {
-
-      return await new Controllers(request)[request.document][request.action]().then(
-        response => {
-
-          console.log('RESPONSE CRUD ============================')
-          console.log(JSON.stringify(response))
-
-          res.json(response);
-
-        }
-      )
-
-    } catch (error) {
-      res.json(error);
-    }
-  }
-); */
 
 credenciaisSecondGen.get("/user/:token/:request", testRequestGet,
 
